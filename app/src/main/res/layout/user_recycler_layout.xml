@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:padding="7dp"
+    android:background="@drawable/recycler_shape"
+    android:orientation="vertical">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:scaleType="fitXY"
+        android:id="@+id/recycler_tourist_image"
+        >
+    </ImageView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="@color/color1"
+            android:textSize="16dp"
+            android:text="place name :- "
+            android:padding="4dp"
+            >
+        </TextView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="name"
+        android:textSize="16dp"
+        android:padding="4dp"
+        android:id="@+id/recycler_tourist_name"
+        android:textColor="@color/color1"
+        android:gravity="center"
+        >
+    </TextView>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="@color/color1"
+            android:textSize="16dp"
+            android:text=" city :- "
+            android:padding="4dp"
+            >
+        </TextView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="city"
+        android:id="@+id/recycler_tourist_city"
+        android:textSize="16dp"
+        android:padding="4dp"
+        android:gravity="center"
+        android:textColor="@color/color1"
+        >
+    </TextView>
+    </LinearLayout>
+</LinearLayout>

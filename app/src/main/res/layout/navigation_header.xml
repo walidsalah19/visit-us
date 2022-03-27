@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/navigation_header"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/first"
+        android:orientation="horizontal"
+        android:background="@color/color2">
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:id="@+id/second"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/first">
+    </LinearLayout>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        app:civ_border_width="1dp"
+        app:civ_border_color="@color/color1"
+        android:layout_margin="20dp"
+        android:id="@+id/circl_imag"
+        android:src="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/first"
+        app:layout_constraintBottom_toTopOf="@id/second"
+        >
+    </de.hdodenhof.circleimageview.CircleImageView>
+<de.hdodenhof.circleimageview.CircleImageView
+    android:layout_width="110dp"
+    android:layout_height="110dp"
+    android:src="@drawable/profile"
+    app:civ_border_width="1dp"
+    app:civ_border_color="@color/color1"
+    android:layout_margin="25dp"
+    android:id="@+id/circle_image_navigation_head"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/first"
+    app:layout_constraintBottom_toTopOf="@id/second"
+    >
+</de.hdodenhof.circleimageview.CircleImageView>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/circle_image_navigation_head"
+        android:text="user name"
+        android:textColor="@color/white"
+        android:textSize="18dp"
+        android:id="@+id/user_name_navigation_head"
+        android:layout_marginStart="10dp"
+        app:layout_constraintBottom_toTopOf="@id/second"
+        app:layout_constraintLeft_toRightOf="@id/circl_imag"
+        >
+    </TextView>
+</androidx.constraintlayout.widget.ConstraintLayout>

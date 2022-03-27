@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "727118673969",
+    "firebase_url": "https://visitus-4ab15-default-rtdb.firebaseio.com",
+    "project_id": "visitus-4ab15",
+    "storage_bucket": "visitus-4ab15.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:727118673969:android:244305da0421dfe5b5fd10",
+        "android_client_info": {
+          "package_name": "com.example.visitus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "727118673969-e14d9d4v63v9bh54vaahmea4pmhcqkn0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.visitus",
+            "certificate_hash": "005e7d8f63eeda637f04775bf6e2f13df6d4e432"
+          }
+        },
+        {
+          "client_id": "727118673969-nlg5v8eltpt8kpsol3vkkqh82910uj6f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDt0bgbpXhB6DTQ83YnXiIw52UI4l52aSY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "727118673969-nlg5v8eltpt8kpsol3vkkqh82910uj6f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

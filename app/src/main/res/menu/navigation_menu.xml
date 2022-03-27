@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<item
+    android:id="@+id/navigation_menu_profile"
+    android:title="Profile"
+    android:orderInCategory="100"
+    android:icon="@drawable/ic_baseline_person_24">
+
+</item>
+    <item
+        android:id="@+id/navigation_menu_about"
+
+        android:title="about us"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_baseline_home_24">
+    </item>
+    <item
+        android:id="@+id/navigation_menu_contact"
+        android:title="Contact us"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_baseline_chat_24">
+    </item>
+    <item
+        android:id="@+id/navigation_menu_setting"
+        android:title="Setting"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_baseline_settings_24">
+    </item>
+    <item
+        android:title="Logout"
+        android:id="@+id/navigation_logout"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_baseline_logout_24">
+    </item>
+</menu>
