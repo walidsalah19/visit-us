@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">visit us</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="about_place">نبذه عن المكان</string>
+    <string name="add_location">اضف موقع</string>
+    <string name="choose_image">اختر صورة</string>
+    <string name="place_name">اسم المكان</string>
+    <string name="city">اسم المدينة</string>
+    <string name="close">مغلق</string>
+    <string name="open">مفتوح</string>
+
+    <string name="add">اضافة</string>
+    <string name="change_language">تغير اللغه</string>
+    <string name="please_enter_email">من فضلك قم بادخال البريد الالكتروني</string>
+    <string name="please_enter_password">من فضلك قم بادخال كلمة المرور</string>
+    <string name="error_occur">حدث خطاء</string>
+    <string name="misfit">كلمة المرور غير متطابقة </string>
+    <string name="successful">تمت بنجاح</string>
+    <string name="please_enter_your_name">من فضلك قم بادخال اسمك</string>
+    <string name="error_occur_in_image">حدث خطاء في تحميل الصورة</string>
+    <string name="enter_the_massage">قم بادخل الرسالة</string>
+    <string name="google_maps_key">AIzaSyDks6qrNVFvPuaYGwy9q4pKKmrrQS30I40</string>
+    <string name="email">البريد اإلكتروني</string>
+    <string name="password">كلمة المرور</string>
+    <string name="show_password">إظهار كلمة المرور</string>
+    <string name="login">تسجسل دخول</string>
+    <string name="create_new_account">انشاء حساب جديد ؟</string>
+    <string name="forget_password">هل نسيت كلمة المرور ؟</string>
+    <string name="confirm_password">تأكيد كلمة المرور</string>
+    <string name="registration">تسجيل الدخول</string>
+    <string name="do_you_have_account_login">هل تمتلك حساب ؟ تسجيل دخول</string>
+    <string name="change_password">تغير كلمة المرور</string>
+    <string name="add_profile">اضافة الملف شخصي</string>
+    <string name="account">الملف الشخصي</string>
+    <string name="edit_profile">تعديل الملف شخصي</string>
+    <string name="app">التطبيق</string>
+    <string name="dark_mode">الوضع المظلم</string>
+    <string name="more">مزيد</string>
+    <string name="language">اللغة</string>
+    <string name="message">الرسالة....</string>
+    <string name="fail">فشل</string>
+    <string name="please_enter_city_name">من فضلك ادخل اسم المدينة</string>
+    <string name="please_enter_place_name">من فضلك ادخل اسم المكان</string>
+    <string name="abstract_">من فضلك اكتب نبذه عن المكان</string>
+    <string name="location_">من فضلك اختر الموقع الخاص المكان</string>
+    <string name="delete">حذف</string>
+    <string name="update">تحديث</string>
+    <string name="choose_imag">من فضلك اختر صوره</string>
+    <string name="get_profile_data">عرض بيانات الملف الشخصي </string>
+    <string name="upload_image">جاري رفع الصوره</string>
+    <string name="upload_image_success">تم رفع الصورة بنجاح</string>
+    <string name="upload_place">جاري رفع بيانات المكان</string>
+    <string name="home">الرئسية</string>
+    <string name="profile">الملف الشخصي</string>
+    <string name="about_us">نبذه عن التطبيق</string>
+    <string name="contact_us">التواصل معنا </string>
+    <string name="setting">الضبط</string>
+    <string name="logout">تسجيل الخروج</string>
+    <string name="title_activity_maps">Map</string>
+
+</resources>

@@ -3,6 +3,7 @@ package com.example.visitus.admin;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -22,6 +23,8 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.visitus.R;
+import com.example.visitus.admin.map.MapsActivity;
+import com.example.visitus.admin.map.move_location;
 import com.example.visitus.data.place_data;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -44,6 +47,8 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 
 public class maintanace_place extends AppCompatActivity {
     private Uri image_uri;
@@ -51,17 +56,15 @@ public class maintanace_place extends AppCompatActivity {
     private EditText city,name,about;
     private Button update,delete;
     private String  image_str="";
-    private String longitude="31.131302",latitude="29.976480",image_id,image_delet_id;
+    private String longitude="",latitude="",last_longitude="",last_latitude="",image_id;
     private ImageButton location,image;
-    private final static int PLACE_PICKER_REQUEST = 999;
-
-    public maintanace_place() {
-    }
-
+    private boolean image_change=false;
+    private SweetAlertDialog pDialogLoading,pDialogSuccess,pDialogerror;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_maintanace_place);
+        sweetalert();
         get_id();
         intioaliza();
         container();
@@ -101,11 +104,13 @@ public class maintanace_place extends AppCompatActivity {
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                   if (task.isSuccessful())
                   {
-                      image_delet_id=task.getResult().get("image_id").toString();
+                      image_id=task.getResult().get("image_id").toString();
                       city.setText(task.getResult().get("city").toString());
                       name.setText(task.getResult().get("name").toString());
                       about.setText(task.getResult().get("about").toString());
-                     image_str=task.getResult().get("image").toString();
+                      image_str=task.getResult().get("image").toString();
+                      last_longitude= task.getResult().get("longitude").toString();
+                      last_latitude=task.getResult().get("latitude").toString();
                       place_id=task.getResult().get("id").toString();
                   }
             }
@@ -131,6 +136,8 @@ public class maintanace_place extends AppCompatActivity {
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                pDialogLoading.setTitleText("update place data ");
+                pDialogLoading.show();
                upload_image();
 
             }
@@ -138,23 +145,28 @@ public class maintanace_place extends AppCompatActivity {
     }
 
     private void check_data() {
+        longitude=move_location.getLongitude();
+        latitude=move_location.getLatitude();
         if(city.getText().toString().equals(""))
         {
-            city.setError("please enter city name");
+            city.setError(getString(R.string.please_enter_city_name));
         }
         else if(name.getText().toString().equals(""))
         {
-            name.setError("please enter place name");
+            name.setError(getString(R.string.please_enter_place_name));
         }
         else if(about.getText().toString().equals(""))
         {
-            about.setError("please enter abstract about place");
+            about.setError(getString(R.string.abstract_));
         }
         else if(longitude.equals(""))
         {
-            Toast.makeText(this, "please choose location of the place ", Toast.LENGTH_SHORT).show();
+            longitude=last_longitude;
+            latitude=last_latitude;
+            add_to_database();
         }
         else {
+
             add_to_database();
         }
 
@@ -173,7 +185,9 @@ public class maintanace_place extends AppCompatActivity {
                 }
                 else
                 {
-                    Toast.makeText(maintanace_place.this, "fail", Toast.LENGTH_SHORT).show();
+                    pDialogLoading.dismiss();
+                    pDialogerror.setTitleText(R.string.fail);
+                    pDialogerror.show();
 
                 }
             }
@@ -181,14 +195,23 @@ public class maintanace_place extends AppCompatActivity {
     }
 
     private void delet_place() {
+
         FirebaseFirestore database=FirebaseFirestore.getInstance();
         database.collection("places").document(place_id).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful())
                 {
-                    Toast.makeText(maintanace_place.this, "successful ", Toast.LENGTH_SHORT).show();
+                    pDialogLoading.dismiss();
+                    pDialogSuccess.setTitleText(getString(R.string.successful));
+                    pDialogSuccess.show();
                     delet_image();
+                }
+                else
+                {
+                    pDialogLoading.dismiss();
+                    pDialogerror.setTitleText(R.string.fail);
+                    pDialogerror.show();
                 }
             }
         });
@@ -199,83 +222,85 @@ public class maintanace_place extends AppCompatActivity {
         location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                get_location();
+                startActivity(new Intent(maintanace_place.this, MapsActivity.class));
             }
         });
     }
-
-    private void get_location(){
-        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
-        try {
-            Intent i=builder.build(maintanace_place.this);
-            startActivityForResult(i, 2);
-        } catch (GooglePlayServicesRepairableException e) {
-            Log.d("Exception", Objects.requireNonNull(e.getMessage()));
-            e.printStackTrace();
-        } catch (GooglePlayServicesNotAvailableException e) {
-            Log.d("Exception", Objects.requireNonNull(e.getMessage()));
-            e.printStackTrace();
-        }
-
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==2 && resultCode == Activity.RESULT_OK )
-        {
-            Place place = PlacePicker.getPlace(maintanace_place.this, data);
-            latitude = place.getLatLng().latitude+"";
-            longitude = place.getLatLng().longitude+"";
-
-        }
         if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
+            image_change=true;
              image_uri=data.getData();
             //upload_image(data.getData());
         }
 
     }
     private void upload_image() {
-        image_id=UUID.randomUUID().toString();
-        FirebaseStorage storage=FirebaseStorage.getInstance();
-        StorageReference reference=storage.getReference("images/").child(image_id);
-        StorageTask task=reference.putFile(image_uri);
-        task.continueWithTask(new Continuation() {
-            @Override
-            public Object then(@NonNull Task task) throws Exception {
-                if(!task.isSuccessful())
-                {
-                    throw task.getException();
+        if (!image_change)
+        {
+            check_data();
+        }
+        else {
+            image_id = UUID.randomUUID().toString();
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+            StorageReference reference = storage.getReference("images/").child(image_id);
+            StorageTask task = reference.putFile(image_uri);
+            task.continueWithTask(new Continuation() {
+                @Override
+                public Object then(@NonNull Task task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
+                    return reference.getDownloadUrl();
                 }
-                return reference.getDownloadUrl();
-            }
-        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-            @Override
-            public void onComplete(@NonNull Task<Uri> task) {
-                if (task.isSuccessful())
-                {
-                    Uri i=task.getResult();
-                    image_str=i.toString();
-                    delet_image();
-                    check_data();
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        Uri i = task.getResult();
+                        image_str = i.toString();
+                        delet_image();
+                        check_data();
 
+                    } else {
+                        check_data();
+                    }
                 }
-                else
-                {
-                    check_data();
-                }
-            }
-        });
+            });
+        }
     }
 
     private void delet_image() {
         FirebaseStorage storage=FirebaseStorage.getInstance();
-        Task<Void> reference=storage.getReference("images/").child( image_delet_id).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+        Task<Void> reference=storage.getReference("images/").child( image_id).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
 
             }
         });
     }
+    private void sweetalert()
+    {
+        //loading
+        pDialogLoading = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
+        pDialogLoading.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        pDialogLoading.setCancelable(false);
 
+        //error
+        pDialogerror= new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE);
+        pDialogerror.setConfirmText(getString(R.string.dialog_ok));
+        pDialogerror.setConfirmClickListener(sweetAlertDialog -> {
+            pDialogerror.dismiss();
+        });
+        pDialogerror.setCancelable(true);
+
+        //Success
+        pDialogSuccess= new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE);
+        pDialogSuccess.setConfirmText(getString(R.string.dialog_ok));
+        pDialogSuccess.setConfirmClickListener(sweetAlertDialog -> {
+            pDialogSuccess.dismiss();
+        });
+        pDialogSuccess.setCancelable(true);
+    }
 }

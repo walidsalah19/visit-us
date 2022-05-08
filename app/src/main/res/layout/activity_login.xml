@@ -4,19 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".user_access.login">
+    tools:context=".user_access.login"
+    android:background="?attr/background_color">
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:id="@+id/login_appbar_main"
-        android:background="@color/color3"
-        app:titleTextColor="@color/white"
+        android:background="?attr/color3"
+        app:titleTextColor="?attr/textcolor"
         app:title="Visit us"
         />
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
+        android:background="?attr/background_color"
         android:layout_below="@id/login_appbar_main">
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -28,7 +29,7 @@
             app:cardMaxElevation="12dp"
             app:cardPreventCornerOverlap="true"
             app:cardUseCompatPadding="true"
-            app:cardBackgroundColor="@color/white"
+            android:background="?attr/background_color"
             android:layout_gravity="center"
             >
             <LinearLayout
@@ -38,22 +39,22 @@
                 android:orientation="vertical"
                 android:layout_below="@+id/imageView_view"
                 android:layout_gravity="center"
-                android:background="@color/white"
+                android:background="?attr/background_color"
                 >
                 <EditText
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:layout_margin="10dp"
                     android:id="@+id/email_edittext"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black"
+                    android:textColor="?attr/textcolor"
+                    android:textColorHint="?attr/textcolor"
                     android:background="@drawable/edittext_shape"
                     android:padding="5dp"
                     android:paddingStart="10dp"
                     android:inputType="textEmailAddress"
                     android:drawablePadding="10dp"
                     android:drawableStart="@drawable/ic_baseline_email_24"
-                    android:hint="email"
+                    android:hint="@string/email"
                     android:ems="10"/>
 
                 <EditText
@@ -64,7 +65,7 @@
                     android:textColor="@color/black"
                     android:textColorHint="@color/black"
                     android:inputType="textPassword"
-                    android:hint="password "
+                    android:hint="@string/password"
                     android:paddingStart="10dp"
                     android:drawablePadding="10dp"
                     android:background="@drawable/edittext_shape"
@@ -82,9 +83,9 @@
 
                     <TextView android:layout_height="match_parent"
                         android:layout_width="match_parent"
-                        android:text="show password"
+                        android:text="@string/show_password"
                         android:gravity="center|start"
-                        android:textColor="@color/black"
+                        android:textColor="?attr/textcolor"
                         android:layout_weight="1"
                         android:textSize="14sp">
                     </TextView>
@@ -103,26 +104,26 @@
                     android:layout_margin="10dp"
                     android:id="@+id/login"
                     android:layout_gravity="center"
-                    android:textColor="@color/white"
+                    android:textColor="?attr/textcolor"
                     android:textSize="18sp"
-                    android:background="@color/color1"
-                    android:text="login "/>
+                    android:background="?attr/color2"
+                    android:text="@string/login"/>
                 <TextView
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:layout_margin="10dp"
                     android:id="@+id/new_account"
-                    android:textColor="@color/black"
+                    android:textColor="?attr/textcolor"
                     android:gravity="center"
-                    android:text=" create new account ?"/>
+                    android:text="@string/create_new_account"/>
 
                 <TextView
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:layout_margin="10dp"
                     android:id="@+id/forgit_password"
-                    android:textColor="@color/black"
-                    android:text="forget password?"/>
+                    android:textColor="?attr/textcolor"
+                    android:text="@string/forget_password"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </androidx.core.widget.NestedScrollView>

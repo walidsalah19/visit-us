@@ -38,7 +38,7 @@ public class forget_password extends AppCompatActivity {
         email=findViewById(R.id.forgit_email_text);
         if (email.getText().toString().equals(""))
         {
-            email.setError("Please enter you'r email");
+            email.setError(getString(R.string.please_enter_email));
         }
         else
         {
@@ -48,7 +48,7 @@ public class forget_password extends AppCompatActivity {
                 public void onComplete(@NonNull Task<Void> task) {
                if (task.isSuccessful())
                {
-                   Toast.makeText(forget_password.this, "send to email", Toast.LENGTH_SHORT).show();
+                   Toast.makeText(forget_password.this, getString(R.string.successful), Toast.LENGTH_SHORT).show();
                }
                 }
             });

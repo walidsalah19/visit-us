@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".chating.user_chat"
-    android:background="@color/white">
+    android:background="?attr/background_color">
     <androidx.recyclerview.widget.RecyclerView
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
@@ -25,18 +25,17 @@
         android:layout_margin="5dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:background="@drawable/llayout_shape">
+        android:background="@drawable/edittext_shape">
         <EditText
             android:layout_height="match_parent"
             android:layout_width="match_parent"
             android:id="@+id/message"
             android:padding="5dp"
             android:inputType="textPersonName"
-            android:hint="massege...."
+            android:hint="@string/message"
             android:ems="10"
-            android:background="@drawable/edittext_shape"
             android:layout_weight="1"
-            android:textColor="@color/black"
+            android:textColor="?attr/textcolor"
             android:textColorHint="@color/black"/>
 
         <androidx.appcompat.widget.AppCompatButton

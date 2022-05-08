@@ -1,6 +1,7 @@
 package com.example.visitus.user_access;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -27,12 +28,15 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 public class registration extends AppCompatActivity {
     private EditText email,password,conform;
     private TextView return_login;
     private FirebaseFirestore database;
     private FirebaseAuth auth;
     private String user_id;
+    private SweetAlertDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +45,15 @@ public class registration extends AppCompatActivity {
         intialization();
         method_registiration();
         show_password_method();
+        sweetdialog();
+    }
+    private void sweetdialog()
+    {
+        dialog=   new SweetAlertDialog(registration.this, SweetAlertDialog.PROGRESS_TYPE);
+        dialog .setTitleText(getString(R.string.registration));
+        dialog  .setCustomImage(R.drawable.ic_baseline_language_24);
+        dialog  .getProgressHelper().setBarColor(Color.RED);
+
     }
     private void  Firebase_tool()
     {
@@ -61,25 +74,24 @@ public class registration extends AppCompatActivity {
     private void check_data() {
         if(TextUtils.isEmpty(email.getText().toString()))
         {
-            email.setError("please enter you'r email");
+            email.setError(getString(R.string.please_enter_email));
         }
         else if(TextUtils.isEmpty(password.getText().toString())&&password.getText().toString().length()<8 )
         {
-            password.setError(" you'r password should be more than 8 ");
+            password.setError(getString(R.string.please_enter_password));
         }
         else if(! password.getText().toString().equals(conform.getText().toString()))
         {
-            conform.setError("you'r password misfit");
+            conform.setError(getString(R.string.misfit));
         }
         else
         {
             complete_registration();
         }
-
-
     }
 
     private void complete_registration() {
+        dialog.show();
         auth.createUserWithEmailAndPassword(email.getText().toString().trim(),password.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -87,12 +99,13 @@ public class registration extends AppCompatActivity {
                 {
                     user_id=task.getResult().getUser().getUid();
                    add_to_database(task.getResult().getUser().getUid().toString());
+
                     //startActivity(new Intent(registration.this,user_profile.class));
 
                 }
                 else
                 {
-                    Toast.makeText(registration.this, "error occur", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(registration.this, getString(R.string.error_occur), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -106,13 +119,15 @@ public class registration extends AppCompatActivity {
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful())
                 {
-                    Toast.makeText(registration.this, "successful", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                    Toast.makeText(registration.this, getString(R.string.successful), Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(registration.this, user_profile.class));
 
                 }
                 else
                 {
-                    Toast.makeText(registration.this, "error occur", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                    Toast.makeText(registration.this, getString(R.string.error_occur), Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -1,4 +1,4 @@
-package com.example.visitus.user;
+package com.example.visitus.user.user_class;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,22 +8,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.visitus.MainActivity;
 import com.example.visitus.R;
-import com.example.visitus.admin.maintanace_place;
-import com.example.visitus.admin.recycler_adapter;
 import com.example.visitus.data.place_data;
+import com.example.visitus.user.show_data;
 
 import java.util.ArrayList;
 
 public class recycler_user_adapter extends RecyclerView.Adapter<recycler_user_adapter.help> {
     ArrayList<place_data> arrayList;
-    MainActivity main;
+    Fragment main;
 
-    public recycler_user_adapter(ArrayList<place_data> arrayList, MainActivity main) {
+    public recycler_user_adapter(ArrayList<place_data> arrayList, Fragment main) {
         this.arrayList = arrayList;
         this.main = main;
     }
@@ -39,11 +38,11 @@ public class recycler_user_adapter extends RecyclerView.Adapter<recycler_user_ad
     public void onBindViewHolder(@NonNull help holder, int position) {
         holder.city.setText(arrayList.get(position).getCity());
         holder.name.setText(arrayList.get(position).getName());
-        Glide.with(main).load(arrayList.get(position).getImage()).into(holder.image);
+        Glide.with(main.getActivity()).load(arrayList.get(position).getImage()).into(holder.image);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               show_data m=new show_data();
+                show_data m=new show_data();
                 Bundle b=new Bundle();
                 b.putString("image",arrayList.get(position).getImage());
                 b.putString("name",arrayList.get(position).getName());
@@ -51,9 +50,8 @@ public class recycler_user_adapter extends RecyclerView.Adapter<recycler_user_ad
                 b.putString("lati",arrayList.get(position).getLatitude());
                 b.putString("city",arrayList.get(position).getCity());
                 b.putString("about",arrayList.get(position).getAbout());
-
                 m.setArguments(b);
-                main.getSupportFragmentManager().beginTransaction().replace(R.id.user_frameLayout,m).addToBackStack(null).commitAllowingStateLoss();
+                main.getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.user_frameLayout,m).addToBackStack(null).commitAllowingStateLoss();
 
             }
         });

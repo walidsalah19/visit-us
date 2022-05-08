@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:background="@android:color/white"
+    android:background="?attr/background_color"
     android:layout_width="match_parent"
     tools:context=".user.user_profile"
     android:layout_height="match_parent">
@@ -11,8 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:id="@+id/m_appbar_main"
-        android:background="@color/color3"
-        app:titleTextColor="@color/white"
+        android:background="?attr/color3"
+        app:titleTextColor="?attr/textcolor"
         app:title="Visit us"
         />
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,13 +22,13 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:orientation="horizontal"
-        android:background="@color/white"
+        android:background="?attr/background_color"
         >
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="160dp"
             android:layout_height="160dp"
             app:civ_border_width="1dp"
-            app:civ_border_color="@color/color1"
+            app:civ_border_color="?attr/color1"
             android:id="@+id/circl_imag"
             android:src="@color/white"
             app:layout_constraintStart_toStartOf="parent"
@@ -43,8 +43,8 @@
                 android:id="@+id/image_pro"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:src="@drawable/profile"
-                app:civ_border_color="@color/color1"
+                android:src="@drawable/logo"
+                app:civ_border_color="?attr/color1"
                 app:civ_border_width="2dp"
                 app:layout_constraintEnd_toEndOf="@id/circl_imag"
                 app:layout_constraintStart_toStartOf="@id/circl_imag"
@@ -85,7 +85,7 @@
                 android:layout_marginStart="10dp"
                 android:textSize="18sp"
                 android:layout_gravity="center"
-                android:textColor="@color/black"
+                android:textColor="?attr/textcolor"
                 android:padding="5dp"
                 />
 
@@ -123,7 +123,7 @@
                 android:enabled="false"
                 android:layout_marginStart="10dp"
                 android:layout_gravity="center"
-                android:textColor="@color/black"
+                android:textColor="?attr/textcolor"
                 android:forceHasOverlappingRendering="true"
                />
 
@@ -137,9 +137,9 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
-        android:textColor="@color/white"
-        android:background="@color/color1"
-        android:text="add profile"
+        android:textColor="?attr/textcolor"
+        android:background="?attr/color2"
+        android:text="@string/add_profile"
         android:textAllCaps="false"
         android:textSize="18sp" />
 </LinearLayout>

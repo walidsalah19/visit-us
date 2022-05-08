@@ -21,9 +21,9 @@
         >
         <TextView android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:textColor="@color/color1"
+            android:textColor="?attr/textcolor"
             android:textSize="16dp"
-            android:text="place name :- "
+            android:text="@string/place_name"
             android:padding="4dp"
             >
         </TextView>
@@ -34,7 +34,7 @@
         android:textSize="16dp"
         android:padding="4dp"
         android:id="@+id/recycler_tourist_name"
-        android:textColor="@color/color1"
+        android:textColor="?attr/textcolor"
         android:gravity="center"
         >
     </TextView>
@@ -46,9 +46,9 @@
         >
         <TextView android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:textColor="@color/color1"
+            android:textColor="?attr/textcolor"
             android:textSize="16dp"
-            android:text=" city :- "
+            android:text="@string/city"
             android:padding="4dp"
             >
         </TextView>
@@ -60,7 +60,7 @@
         android:textSize="16dp"
         android:padding="4dp"
         android:gravity="center"
-        android:textColor="@color/color1"
+        android:textColor="?attr/textcolor"
         >
     </TextView>
     </LinearLayout>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">visitus</string>
+    <string name="app_name">visit us</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="about_place">About place</string>
@@ -11,5 +11,54 @@
     <string name="open">open</string>
 
     <string name="add">add</string>
+    <string name="change_language">change language</string>
+    <string name="please_enter_email">please enter your email</string>
+    <string name="please_enter_password">please enter your password</string>
+    <string name="error_occur">error occur</string>
+    <string name="misfit">your password misfit</string>
+    <string name="successful">successful</string>
+    <string name="please_enter_your_name">please enter your name</string>
+    <string name="error_occur_in_image">error occur in image</string>
+    <string name="enter_the_massage">enter the massage</string>
     <string name="google_maps_key">AIzaSyDks6qrNVFvPuaYGwy9q4pKKmrrQS30I40</string>
+    <string name="email">email</string>
+    <string name="password">password</string>
+    <string name="show_password">show password</string>
+    <string name="login">login</string>
+    <string name="create_new_account">create new account ?</string>
+    <string name="forget_password">forget password?</string>
+    <string name="confirm_password">confirm password</string>
+    <string name="registration">registration</string>
+    <string name="do_you_have_account_login">Do you have account ? Login</string>
+    <string name="change_password">change password</string>
+    <string name="add_profile">add profile</string>
+    <string name="account">Account</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="app">App</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="more">More</string>
+    <string name="language">language</string>
+    <string name="message">message....</string>
+    <string name="fail">fail</string>
+    <string name="please_enter_city_name">please enter city name</string>
+    <string name="please_enter_place_name">please enter place name</string>
+    <string name="abstract_">please enter abstract about place</string>
+    <string name="location_">please choose location of the place</string>
+    <string name="delete">delete</string>
+    <string name="update">update</string>
+    <string name="choose_imag">please choose image of the place </string>
+    <string name="get_profile_data">get profile data</string>
+    <string name="upload_image">upload image</string>
+    <string name="upload_image_success">upload image success</string>
+    <string name="upload_place">upload place data</string>
+    <string name="home">home</string>
+    <string name="profile">Profile</string>
+    <string name="about_us">about us</string>
+    <string name="contact_us">Contact us</string>
+    <string name="setting">Setting</string>
+    <string name="logout">Logout</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="select_location">select this location</string>
+
+
 </resources>

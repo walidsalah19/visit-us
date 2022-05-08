@@ -1,8 +1,8 @@
 package com.example.visitus.admin;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,42 +17,64 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.visitus.R;
+import com.example.visitus.admin.map.move_location;
 import com.example.visitus.data.place_data;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlacePicker;
+import com.example.visitus.admin.map.MapsActivity;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
-import com.google.firebase.storage.UploadTask;
-import java.util.Objects;
+
 import java.util.UUID;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 
 public class add_touristic_places  extends AppCompatActivity {
     private EditText city,name,about;
     private Button add;
-    private String image_str,longitude="31.131302",latitude="29.976480",image_id;
+    private String image_str,longitude,latitude,image_id;
     private ImageButton location,image;
     private final static int PLACE_PICKER_REQUEST = 2;
    private Uri image_uri;
+    private SweetAlertDialog pDialogLoading,pDialogSuccess,pDialogerror;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_show_touristic_places);
-
+        sweetalert();
         intioaliza();
         add_location();
         add_image();
         add_method();
     }
+    private void sweetalert()
+    {
+        //loading
+        pDialogLoading = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
+        pDialogLoading.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        pDialogLoading.setCancelable(false);
 
+        //error
+        pDialogerror= new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE);
+        pDialogerror.setConfirmText(getString(R.string.dialog_ok));
+        pDialogerror.setConfirmClickListener(sweetAlertDialog -> {
+            pDialogerror.dismiss();
+        });
+        pDialogerror.setCancelable(true);
+
+        //Success
+        pDialogSuccess= new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE);
+        pDialogSuccess.setConfirmText(getString(R.string.dialog_ok));
+        pDialogSuccess.setConfirmClickListener(sweetAlertDialog -> {
+            pDialogSuccess.dismiss();
+        });
+        pDialogSuccess.setCancelable(true);
+    }
 
     private void add_image() {
         image.setOnClickListener(new View.OnClickListener() {
@@ -91,25 +112,27 @@ public class add_touristic_places  extends AppCompatActivity {
     }
 
     private void check_data() {
+        longitude= move_location.getLongitude();
+        latitude=move_location.getLatitude();
         if(city.getText().toString().equals(""))
         {
-            city.setError("please enter city name");
+            city.setError(getString(R.string.please_enter_city_name));
         }
         else if(name.getText().toString().equals(""))
         {
-            name.setError("please enter place name");
+            name.setError(getString(R.string.please_enter_place_name));
         }
         else if(about.getText().toString().equals(""))
         {
-            about.setError("please enter abstract about place");
+            about.setError(getString(R.string.abstract_));
         }
-        else if(longitude.equals(""))
+        else if(longitude.equals(null))
         {
-            Toast.makeText(this, "please choose location of the place ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.location_), Toast.LENGTH_SHORT).show();
         }
         else if(image_str.equals(""))
         {
-            Toast.makeText(this, "please choose image of the place ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.choose_imag), Toast.LENGTH_SHORT).show();
         }
         else {
             add_to_database();
@@ -126,12 +149,15 @@ public class add_touristic_places  extends AppCompatActivity {
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful())
                 {
-                    Toast.makeText(getApplicationContext(), "successful ", Toast.LENGTH_SHORT).show();
+                    pDialogLoading.dismiss();
+                    pDialogSuccess.setTitleText(getString(R.string.successful));
+                    pDialogSuccess.show();
                 }
                 else
                 {
-                    Toast.makeText(getApplicationContext(), "fail", Toast.LENGTH_SHORT).show();
-
+                    pDialogLoading.dismiss();
+                    pDialogerror.setTitleText(R.string.fail);
+                    pDialogerror.show();
                 }
             }
         });
@@ -141,43 +167,21 @@ public class add_touristic_places  extends AppCompatActivity {
         location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                get_location();
+                startActivity(new Intent(add_touristic_places.this, MapsActivity.class));
             }
         });
     }
-
-    private void get_location(){
-        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
-        try {
-            Intent i=builder.build(this);
-            startActivityForResult(i, 2);
-        } catch (GooglePlayServicesRepairableException e) {
-            Log.d("Exception", Objects.requireNonNull(e.getMessage()));
-            e.printStackTrace();
-        } catch (GooglePlayServicesNotAvailableException e) {
-            Log.d("Exception", Objects.requireNonNull(e.getMessage()));
-            e.printStackTrace();
-        }
-
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-       /* if (requestCode==2 && resultCode == RESULT_OK )
-        {
-            Place place = PlacePicker.getPlace(getApplicationContext(), data);
-            latitude = place.getLatLng().latitude+"";
-            longitude = place.getLatLng().longitude+"";
-
-        }*/
         if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
             image_uri=data.getData();
-            //upload_image(data.getData());
         }
 
         }
     private void upload_image() {
+        pDialogLoading.setTitleText(getString(R.string.upload_place));
+        pDialogLoading.show();
         image_id= UUID.randomUUID().toString();
         FirebaseStorage storage=FirebaseStorage.getInstance();
         StorageReference reference=storage.getReference("images/").child(image_id);
@@ -201,7 +205,10 @@ public class add_touristic_places  extends AppCompatActivity {
                     check_data();
                 }
                 else {
-                    Toast.makeText(add_touristic_places.this, "error occur in image", Toast.LENGTH_SHORT).show();
+                    pDialogLoading.dismiss();
+                    pDialogerror.setTitleText(R.string.error_occur_in_image);
+                    pDialogerror.show();
+                    Toast.makeText(add_touristic_places.this, getString(R.string.error_occur_in_image), Toast.LENGTH_SHORT).show();
                 }
             }
         });

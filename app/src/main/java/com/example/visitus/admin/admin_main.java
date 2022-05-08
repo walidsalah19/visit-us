@@ -2,18 +2,20 @@ package com.example.visitus.admin;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.SearchView;
 
-import com.example.visitus.MainActivity;
 import com.example.visitus.R;
 import com.example.visitus.data.place_data;
-import com.example.visitus.user.recycler_user_adapter;
+import com.example.visitus.user_access.login;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -28,10 +30,13 @@ public class admin_main extends AppCompatActivity {
     private RecyclerView recyclerView;
     private SearchView search;
     private  ArrayList<place_data>arr;
+    private Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_main);
+        toolbar=findViewById(R.id.admin_appbar_main);
+        setSupportActionBar(toolbar);
         add_new_place();
         searchview_method();
     }
@@ -64,7 +69,8 @@ public class admin_main extends AppCompatActivity {
                     arr.clear();
                     for (QueryDocumentSnapshot snap:task.getResult()) {
                         place_data data =new place_data(snap.get("image").toString(),snap.get("name").toString(),snap.get("city").toString()
-                                ,snap.get("longitude").toString(),snap.get("latitude").toString(),snap.get("about").toString(),snap.get("id").toString(),snap.get("image_id").toString());
+                                ,snap.get("longitude").toString(),snap.get("latitude").toString(),snap.get("about").toString(),snap.get("id").toString()
+                                ,snap.get("image_id").toString());
                         arr.add(data);
                     }
                     recycler_adapter adapter=new recycler_adapter(arr,admin_main.this);
@@ -106,4 +112,21 @@ public class admin_main extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.admin,menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected( MenuItem item) {
+        super.onOptionsItemSelected(item);
+        switch (item.getItemId())
+        {
+            case R.id.admin_logout:
+                startActivity(new Intent(admin_main.this, login.class));
+                break;
+        }
+        return true;
+    }
 }

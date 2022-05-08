@@ -1,17 +1,22 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Visitus" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.Dark" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">#544C5E</item>
+        <item name="colorPrimaryVariant">#575165</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
+        <item name="colorSecondary">#98A8A7</item>
+        <item name="colorSecondaryVariant">#434A4A</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="color1">#0D0E09</item>
+        <item name="color2">#35372D</item>
+        <item name="color3">#555A4C</item>
+        <item name="textcolor">#FFFFFFFF</item>
+        <item name="background_color">#5E5D5D</item>
     </style>
     <style name="Toolbar" parent="Widget.AppCompat.SearchView" >
         <!--This line changes the color of text in Toolbar-->

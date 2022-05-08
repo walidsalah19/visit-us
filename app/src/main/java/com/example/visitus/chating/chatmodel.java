@@ -2,9 +2,7 @@ package com.example.visitus.chating;
 
 public class chatmodel {
     private String message;
-
     private String sender;
-
     public chatmodel(String message, String sender) {
         this.message = message;
         this.sender = sender;

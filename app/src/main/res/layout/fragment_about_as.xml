@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".user.about_as"
-    android:background="@color/white">
+    android:background="?attr/background_color">
 
     <TextView
         android:layout_width="match_parent"
@@ -12,9 +12,11 @@
         android:text="we are touristic application"
         android:background="@drawable/edittext_shape"
         android:layout_margin="5dp"
-        android:textColor="@color/color1"
+        android:textColor="?attr/textcolor"
         android:padding="5dp"
         android:textSize="18dp"
+        android:inputType="textMultiLine"
+
         />
 
 </FrameLayout>

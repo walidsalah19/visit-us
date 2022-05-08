@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".user.show_data"
-    android:background="@color/white">
+    android:background="?attr/background_color">
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -19,7 +19,7 @@
             app:cardMaxElevation="3dp"
             app:cardPreventCornerOverlap="true"
             app:cardUseCompatPadding="true"
-            app:cardBackgroundColor="@color/white"
+            app:cardBackgroundColor="?attr/background_color"
             android:layout_gravity="start"
             android:background="@drawable/recycler_shape"
             >
@@ -41,7 +41,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/color1"
+                android:background="?attr/color1"
                 >
             </View>
             <LinearLayout
@@ -53,15 +53,15 @@
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:layout_margin="10dp"
-                android:textColor="@color/black"
+                android:textColor="?attr/textcolor"
                 android:gravity="center"
-                android:text=" city :-"/>
+                android:text="@string/city"/>
                 <TextView
                     android:layout_height="match_parent"
                     android:layout_width="match_parent"
                     android:layout_margin="10dp"
                     android:id="@+id/user_show_city"
-                    android:textColor="@color/black"
+                    android:textColor="?attr/textcolor"
                     android:gravity="center"
                     />
 
@@ -69,7 +69,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/color1"
+                android:background="?attr/color1"
                 >
             </View>
             <LinearLayout
@@ -81,15 +81,15 @@
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:layout_margin="10dp"
-                    android:textColor="@color/black"
+                    android:textColor="?attr/textcolor"
                     android:gravity="center"
-                    android:text=" place name :-"/>
+                    android:text="@string/place_name"/>
                 <TextView
                     android:layout_height="match_parent"
                     android:layout_width="match_parent"
                     android:layout_margin="10dp"
                     android:id="@+id/user_show_name"
-                    android:textColor="@color/black"
+                    android:textColor="?attr/textcolor"
                     android:gravity="center"
                     />
 
@@ -97,7 +97,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/color1"
+                android:background="?attr/color1"
                 >
             </View>
             <LinearLayout
@@ -109,15 +109,15 @@
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:layout_margin="10dp"
-                    android:textColor="@color/black"
+                    android:textColor="?attr/textcolor"
                     android:gravity="center"
-                    android:text=" about place :-"/>
+                    android:text="@string/about_place"/>
                 <TextView
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:layout_margin="10dp"
                     android:id="@+id/user_show_about"
-                    android:textColor="@color/black"
+                    android:textColor="?attr/textcolor"
                     android:gravity="center"
 
                     />
@@ -126,7 +126,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/color1"
+                android:background="?attr/color1"
                 >
             </View>
             <ImageButton

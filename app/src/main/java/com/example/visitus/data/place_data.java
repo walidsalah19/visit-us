@@ -1,7 +1,7 @@
 package com.example.visitus.data;
 
 public class place_data {
-     String image,name,city,longitude,latitude,about,id,image_id;
+    private String image,name,city,longitude,latitude,about,id,image_id;
 
     public place_data(String image, String name, String city, String longitude, String latitude, String about, String id,String image_id) {
         this.image = image;

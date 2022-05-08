@@ -2,12 +2,14 @@ package com.example.visitus.user;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -21,6 +23,7 @@ import com.bumptech.glide.Glide;
 import com.example.visitus.MainActivity;
 import com.example.visitus.R;
 import com.example.visitus.admin.add_touristic_places;
+import com.example.visitus.user_access.registration;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -35,6 +38,7 @@ import com.google.firebase.storage.StorageTask;
 import java.util.HashMap;
 import java.util.UUID;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class user_profile extends AppCompatActivity {
@@ -46,14 +50,28 @@ public class user_profile extends AppCompatActivity {
     private FirebaseFirestore firestore;
     private String image_str="",user_id,image_status="";
     private Uri image_uri;
+    private SweetAlertDialog dialog;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+            setTheme(R.style.Theme_Dark);
+        }else {
+            setTheme(R.style.Theme_Light);
+        }
         setContentView(R.layout.fragment_profile);
+        sweetdialog();
         intioalization();
         get_data();
         add_profile();
         image_method();
+    }
+    private void sweetdialog()
+    {
+        dialog=   new SweetAlertDialog(user_profile.this, SweetAlertDialog.PROGRESS_TYPE);
+        dialog .setTitleText(getString(R.string.get_profile_data));
+        dialog  .setCustomImage(R.drawable.ic_baseline_language_24);
+        dialog  .getProgressHelper().setBarColor(Color.RED);
     }
     private void intioalization()
     {
@@ -67,7 +85,7 @@ public class user_profile extends AppCompatActivity {
     }
     private void get_data()
     {
-
+        dialog.show();
         firestore.collection("users").document(user_id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -78,15 +96,18 @@ public class user_profile extends AppCompatActivity {
                         email.setText(task.getResult().get("email").toString());
                         image_str=task.getResult().get("image").toString();
                         Glide.with(user_profile.this).load(image_str).into(image);
+                        dialog.dismiss();
                     }
                     else if (task.getResult().contains("name"))
                     {
                         name.setText(task.getResult().get("name").toString());
                         email.setText(task.getResult().get("email").toString());
+                        dialog.dismiss();
                     }
                     else
                     {
                         email.setText(task.getResult().get("email").toString());
+                        dialog.dismiss();
                     }
                 }
             }
@@ -105,7 +126,7 @@ public class user_profile extends AppCompatActivity {
     private void check_data() {
         if (name.getText().toString().equals(""))
         {
-            name.setError("please enter your name");
+            name.setError(getString(R.string.please_enter_your_name));
         }
         else if(image_str.equals(""))
         {
@@ -131,7 +152,7 @@ public class user_profile extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(user_profile.this, "Success added", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(user_profile.this, getString(R.string.successful), Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(user_profile.this, MainActivity.class));
                 }
             }
@@ -186,7 +207,7 @@ public class user_profile extends AppCompatActivity {
                         image_str = i.toString();
                         check_data();
                     } else {
-                        Toast.makeText(user_profile.this, "error occur in image", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(user_profile.this, getString(R.string.error_occur_in_image), Toast.LENGTH_SHORT).show();
                     }
                 }
             });

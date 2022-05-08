@@ -3,11 +3,10 @@ package com.example.visitus;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -18,13 +17,16 @@ import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.visitus.data.event_bus;
 import com.example.visitus.data.place_data;
 import com.example.visitus.user.about_as;
-import com.example.visitus.user.recycler_user_adapter;
 import com.example.visitus.user.setting;
 import com.example.visitus.chating.user_chat;
+import com.example.visitus.user.user_class.sharedprefrance;
+import com.example.visitus.user.user_home;
 import com.example.visitus.user.user_profile;
 import com.example.visitus.user_access.login;
+import com.example.visitus.user_access.splash;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
@@ -32,9 +34,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.squareup.picasso.Picasso;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
@@ -43,7 +46,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
-    private RecyclerView recyclerView;
     private FirebaseAuth auth;
     private  FirebaseFirestore database;
     private CircleImageView image;
@@ -53,18 +55,24 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedprefrance s=new sharedprefrance(MainActivity.this);
+        boolean theme= s.loadThemeMode();
+        if (theme)
+        {
+            setTheme(R.style.Theme_Dark);
+        }else {
+            setTheme(R.style.Theme_Light);
+        }
         setContentView(R.layout.activity_main);
         initialization();
         toolpar_intialize();
         navigation_items();
-        RecyclerView_container();
         get_user_data();
-        searchview_method();
     }
-
     @Override
     protected void onStart() {
         super.onStart();
+        EventBus.getDefault().register(this);
         FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
         if (user==null)
         {
@@ -75,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
     {
         auth=FirebaseAuth.getInstance();
         database=FirebaseFirestore.getInstance();
+        replace_fragment(new user_home());
     }
     private void toolpar_intialize() {
         toolbar = findViewById(R.id.user_appbar_main);
@@ -102,6 +111,9 @@ public class MainActivity extends AppCompatActivity {
     }
     private void navigation_item_click(MenuItem item)
     {
+        if(item.getItemId()==R.id.navigation_menu_home) {
+            replace_fragment(new user_home());
+        }
         if(item.getItemId()==R.id.navigation_menu_setting) {
             replace_fragment(new setting());
         }
@@ -127,31 +139,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-    private void RecyclerView_container()
-    {
-        recyclerView=findViewById(R.id.user_recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        arr=new ArrayList<>();
-        FirebaseFirestore database=FirebaseFirestore.getInstance();
-        database.collection("places").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful())
-                {
-                    arr.clear();
-                    for (QueryDocumentSnapshot snap:task.getResult()) {
-                        place_data data =new place_data(snap.get("image").toString(),snap.get("name").toString(),snap.get("city").toString()
-                                ,snap.get("longitude").toString(),snap.get("latitude").toString(),snap.get("about").toString(),snap.get("id").toString(),snap.get("image_id").toString());
-                        arr.add(data);
-                    }
-                    recycler_user_adapter adapter=new recycler_user_adapter(arr, MainActivity.this);
-                    recyclerView.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
-                }
-            }
-        });
 
-    }
     private void get_user_data()
     {
         String user_id=auth.getCurrentUser().getUid();
@@ -179,35 +167,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    private void searchview_method()
+    @Subscribe( threadMode = ThreadMode.MAIN)
+    public void eventbus(event_bus event)
     {
-        search=findViewById(R.id.user_search_view);
-        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                //get_device_fromdatabase(s);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                get_device_searched(s);
-                return false;
-            }
-        });
-    }
-    private void get_device_searched(String s) {
-        ArrayList<place_data>arrayList=new ArrayList<>();
-        for(int i=0;i< arr.size();i++) {
-            if(arr.get(i).getName().contains(s))
-            {
-                arrayList.add(arr.get(i));
-            }
+        if (event.getMsg().equals("main"))
+        {
+            startActivity(new Intent(this,MainActivity.class));
+            finish();
         }
-            recycler_user_adapter adapter=new recycler_user_adapter(arrayList, MainActivity.this);
-            recyclerView.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        EventBus.getDefault().unregister(this);
+
 
     }
+
 
 }
