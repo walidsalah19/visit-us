@@ -1,2 +1,2 @@
 # visit-us
-this is touristic application
+this is touristic application used to
